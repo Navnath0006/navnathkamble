@@ -38,7 +38,7 @@
     /* Updated gradient-bg with background image */
     .gradient-bg {
         background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%), 
-                    url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+                    url('./assets/2278095-hd_1920_1080_30fps.mp4') center/cover no-repeat;
         background-attachment: fixed;
         position: relative;
         min-height: 100vh;
@@ -56,21 +56,36 @@
         background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(1px);
     }
-    
-    /* Animated background particles */
-    .gradient-bg::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-        animation: float 20s ease-in-out infinite;
-        pointer-events: none;
-    }
+   .gradient-bg {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2; /* behind everything */
+}
+
+.gradient-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg, 
+        rgba(102, 126, 234, 0.85) 0%, 
+        rgba(118, 75, 162, 0.85) 100%
+    );
+    z-index: -1; /* sits above video but behind content */
+}
     
     @keyframes float {
         0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -306,6 +321,9 @@
    <!-- UPDATED HERO SECTION HTML -->
 <section id="home" class="section min-h-screen flex items-center gradient-bg relative overflow-hidden">
     <!-- Enhanced overlay -->
+     <video autoplay muted loop playsinline class="bg-video">
+        <source src="./assets/2278095-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
     <div class="hero-overlay absolute inset-0"></div>
     
     <!-- Content -->
