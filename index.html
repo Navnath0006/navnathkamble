@@ -1,574 +1,420 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navnath M. Kamble - Portfolio</title>
+    <title>Navnath M. Kamble | Portfolio</title>
+    <meta name="description" content="Portfolio of Navnath M. Kamble - Software Engineer & Data Analyst">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-    tailwind.config = {
-        darkMode: 'class'
-    }
-</script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Outfit"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            text: '#f8fafc'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.0.29/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <!-- UPDATED STYLE TAG -->
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
-    * {
-        font-family: 'Inter', sans-serif;
-        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    }
-    
-    .glass {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .glass-dark {
-        background: rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    /* Updated gradient-bg with background image */
-    .gradient-bg {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%), 
-                    url('./assets/2278095-hd_1920_1080_30fps.mp4') center/cover no-repeat;
-        background-attachment: fixed;
-        position: relative;
-        min-height: 100vh;
-    }
-    
-    /* Fallback for mobile devices (background-attachment: fixed can cause issues) */
-    @media (max-width: 768px) {
-        .gradient-bg {
-            background-attachment: scroll;
+
+    <style>
+        /* Custom Styles & Utilities */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
-    }
-    
-    /* Enhanced overlay for better text readability */
-    .hero-overlay {
-        background: rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(1px);
-    }
-   .gradient-bg {
-    position: relative;
-    min-height: 100vh;
-    overflow: hidden;
-}
 
-.bg-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -2; /* behind everything */
-}
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+        }
 
-.gradient-bg::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        135deg, 
-        rgba(102, 126, 234, 0.85) 0%, 
-        rgba(118, 75, 162, 0.85) 100%
-    );
-    z-index: -1; /* sits above video but behind content */
-}
-    
-    @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-20px) rotate(5deg); }
-    }
-    
-    /* Enhanced hero text effects */
-    .hero-title {
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        animation: fadeInUp 1.2s ease-out;
-    }
-    
-    .hero-subtitle {
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        animation: fadeInUp 1.2s ease-out 0.2s both;
-    }
-    
-    .hero-description {
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        animation: fadeInUp 1.2s ease-out 0.4s both;
-    }
-    
-    .hero-contact {
-        animation: fadeInUp 1.2s ease-out 0.6s both;
-    }
-    
-    .hero-social {
-        animation: fadeInUp 1.2s ease-out 0.8s both;
-    }
-    
-    @keyframes fadeInUp {
-        from {
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Video Background */
+        .video-bg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-bg {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.8));
+        }
+
+        .dark .video-overlay {
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.95));
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Utilities */
+        .text-gradient {
+            background: linear-gradient(to right, #7c3aed, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dark .text-gradient {
+            background: linear-gradient(to right, #a78bfa, #f472b6);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .dark .timeline-line {
+            background: #334155;
+        }
+
+        /* Project Modal */
+        .modal {
             opacity: 0;
-            transform: translateY(30px);
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
-        to {
+        .modal.active {
             opacity: 1;
-            transform: translateY(0);
+            visibility: visible;
         }
-    }
-    
-    /* Enhanced glass effect for hero elements */
-    .hero-glass {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    }
-    
-    .hero-glass:hover {
-        background: rgba(255, 255, 255, 0.25);
-        transform: translateY(-2px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-    }
-    
-    /* Profile avatar enhancement */
-    .hero-avatar {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3),
-                    0 0 0 8px rgba(255, 255, 255, 0.1);
-        animation: pulse-glow 3s ease-in-out infinite;
-    }
-    
-    @keyframes pulse-glow {
-        0%, 100% { 
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3),
-                        0 0 0 8px rgba(255, 255, 255, 0.1),
-                        0 0 20px rgba(102, 126, 234, 0.3);
-        }
-        50% { 
-            box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.4),
-                        0 0 0 12px rgba(255, 255, 255, 0.15),
-                        0 0 30px rgba(102, 126, 234, 0.5);
-        }
-    }
-    .gradient-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    .skill-bar {
-        height: 8px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 4px;
-        overflow: hidden;
-    }
-    
-    .skill-progress {
-        height: 100%;
-        background: linear-gradient(90deg, #667eea, #764ba2);
-        border-radius: 4px;
-        transform-origin: left;
-        transform: scaleX(0);
-        transition: transform 1s ease-out;
-    }
-    
-    .timeline-item::before {
-        content: '';
-        position: absolute;
-        left: -8px;
-        top: 0;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border: 3px solid white;
-    }
-    
-    .project-card {
-        transition: all 0.3s ease;
-    }
-    
-    .project-card:hover {
-        transform: translateY(-10px);
-    }
-    
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(8px);
-        transition: all 0.3s ease;
-    }
-    
-    .modal-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 2rem;
-        border-radius: 20px;
-        max-width: 600px;
-        width: 90%;
-        max-height: 80vh;
-        overflow-y: auto;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    
-    .dark .modal-content {
-        background: #1f2937;
-        color: white;
-    }
-    
-    .navbar {
-        transition: all 0.3s ease;
-    }
-    
-    .navbar.scrolled {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .dark .navbar.scrolled {
-        background: rgba(31, 41, 55, 0.95);
-        backdrop-filter: blur(10px);
-    }
-    
-    .section {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .section.animate {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    
-    .section.visible {
-        opacity: 1;
-        transform: translateY(0);
-        transition: all 0.8s ease-out;
-    }
-    
-    #scroll-to-top {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(20px);
-    }
-
-    #scroll-to-top.visible {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-
-    #scroll-to-top:hover {
-        transform: translateY(-2px) scale(1.02);
-    }
-    
-    @keyframes ripple {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-</style>
+    </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+<body class="bg-slate-50 text-slate-900 dark:bg-dark-bg dark:text-slate-100 transition-colors duration-300">
+
     <!-- Navigation -->
-    <nav class="navbar fixed top-0 left-0 right-0 z-50 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold gradient-text">Navnath M. Kamble</h1>
-            <div class="hidden md:flex space-x-8">
-                <a href="#home" class="nav-link text-gray-700 dark:text-gray-300 hover:text-purple-600 transition-colors">Home</a>
-                <a href="#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-purple-600 transition-colors">About</a>
-                <a href="#experience" class="nav-link text-gray-700 dark:text-gray-300 hover:text-purple-600 transition-colors">Experience</a>
-                <a href="#projects" class="nav-link text-gray-700 dark:text-gray-300 hover:text-purple-600 transition-colors">Projects</a>
-                <a href="#skills" class="nav-link text-gray-700 dark:text-gray-300 hover:text-purple-600 transition-colors">Skills</a>
-                <a href="#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-purple-600 transition-colors">Contact</a>
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl">
+        <div class="glass rounded-full px-6 py-3 flex justify-between items-center shadow-lg shadow-black/5">
+            <a href="#" class="text-xl font-bold font-display tracking-tight hover:text-primary-600 transition-colors">
+                NK<span class="text-primary-600">.</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#about" class="text-sm font-medium hover:text-primary-600 transition-colors">About</a>
+                <a href="#experience" class="text-sm font-medium hover:text-primary-600 transition-colors">Experience</a>
+                <a href="#projects" class="text-sm font-medium hover:text-primary-600 transition-colors">Projects</a>
+                <a href="#skills" class="text-sm font-medium hover:text-primary-600 transition-colors">Skills</a>
             </div>
-            <div class="flex items-center space-x-4">
-                <button id="theme-toggle" class="p-2 rounded-lg glass hover:bg-white/20 transition-colors">
-                    <i class="fas fa-moon dark:hidden"></i>
-                    <i class="fas fa-sun hidden dark:inline"></i>
+
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/10 transition-colors" aria-label="Toggle Theme">
+                    <i class="fas fa-moon dark:hidden text-slate-600"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
                 </button>
-                <button id="mobile-menu" class="md:hidden p-2 rounded-lg glass">
+                <a href="#contact" class="hidden md:inline-flex px-5 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-full transition-colors">
+                    Contact Me
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-lg">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
     </nav>
 
-   <!-- UPDATED HERO SECTION HTML -->
-<section id="home" class="section min-h-screen flex items-center gradient-bg relative overflow-hidden">
-    <!-- Enhanced overlay -->
-     <video autoplay muted loop playsinline class="bg-video">
-        <source src="./assets/2278095-hd_1920_1080_30fps.mp4" type="video/mp4">
-    </video>
-    <div class="hero-overlay absolute inset-0"></div>
-    
-    <!-- Content -->
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <div class="text-center text-white">
-            <!-- Profile Avatar with enhanced styling -->
-            <div class="mb-8">
-                <div class="w-36 h-36 mx-auto mb-6 rounded-full hero-glass p-1 hero-avatar">
-                    <div class="w-full h-full bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-5xl font-bold shadow-inner">
-                        NK
-                    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-white/95 dark:bg-dark-bg/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8">
+        <button id="close-mobile-menu" class="absolute top-8 right-8 text-2xl">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="#about" class="text-2xl font-bold hover:text-primary-600">About</a>
+        <a href="#experience" class="text-2xl font-bold hover:text-primary-600">Experience</a>
+        <a href="#projects" class="text-2xl font-bold hover:text-primary-600">Projects</a>
+        <a href="#skills" class="text-2xl font-bold hover:text-primary-600">Skills</a>
+        <a href="#contact" class="text-2xl font-bold text-primary-600">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-20">
+        <!-- Video Background -->
+        <div class="video-bg-container">
+            <video autoplay muted loop playsinline class="video-bg">
+                <source src="./assets/2278095-hd_1920_1080_30fps.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl w-full grid lg:grid-cols-2 gap-12 items-center">
+            <div class="text-white space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium text-primary-200">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    Available for new opportunities
                 </div>
                 
-                <!-- Main title with enhanced animation -->
-                <h1 class="hero-title text-5xl md:text-7xl font-bold mb-4">
-                    Navnath M. Kamble
+                <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
+                    Hi, I'm <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-pink-300">Navnath Kamble</span>
                 </h1>
                 
-                <!-- Subtitle -->
-                <p class="hero-subtitle text-xl md:text-2xl mb-6 text-purple-200 font-semibold">
-                    Young Professional-II at ICAR-NIVEDI
+                <p class="text-lg lg:text-xl text-slate-300 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                    A dedicated <strong>Software Engineer</strong> & <strong>Data Analyst</strong> specializing in database management, software testing, and full-stack web development.
                 </p>
                 
-                <!-- Description -->
-                <p class="hero-description text-lg mb-8 max-w-3xl mx-auto text-purple-100 leading-relaxed">
-                    Dedicated professional with expertise in <strong>database management</strong>, 
-                    <strong>software testing</strong>, and <strong>web development</strong>. 
-                    Passionate about delivering innovative IT solutions.
-                </p>
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
+                    <a href="#projects" class="px-8 py-3 bg-white text-primary-900 font-bold rounded-full hover:bg-primary-50 transition-colors w-full sm:w-auto text-center">
+                        View Work
+                    </a>
+                    <a href="https://github.com/Navnath0006/" target="_blank" class="px-8 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-medium rounded-full hover:bg-white/20 transition-colors flex items-center gap-2 w-full sm:w-auto justify-center">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
             </div>
-            
-            <!-- Contact Information with enhanced glass effect -->
-            <div class="hero-contact flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-8">
-                <a href="mailto:navnathkamble0007@gmail.com" 
-                   class="flex items-center space-x-3 hero-glass px-8 py-4 rounded-full transition-all duration-300">
-                    <i class="fas fa-envelope text-xl"></i>
-                    <span class="font-medium">navnathkamble0007@gmail.com</span>
-                </a>
-                <a href="tel:+919561874606" 
-                   class="flex items-center space-x-3 hero-glass px-8 py-4 rounded-full transition-all duration-300">
-                    <i class="fas fa-phone text-xl"></i>
-                    <span class="font-medium">+91-9561874606</span>
-                </a>
-            </div>
-            
-            <!-- Social Links -->
-            <div class="hero-social flex justify-center space-x-6 mb-8">
-                <!-- <a href="#" class="w-14 h-14 hero-glass rounded-full flex items-center justify-center transition-all duration-300 group">
-                    <i class="fab fa-linkedin-in text-2xl group-hover:scale-110 transition-transform"></i>
-                </a> -->
-                <a href="https://github.com/Navnath0006/" target="_blank" class="w-14 h-14 hero-glass rounded-full flex items-center justify-center transition-all duration-300 group">
-                    <i class="fab fa-github text-2xl group-hover:scale-110 transition-transform"></i>
-                </a>
-                <!-- <a href="#" class="w-14 h-14 hero-glass rounded-full flex items-center justify-center transition-all duration-300 group">
-                    <i class="fas fa-download text-2xl group-hover:scale-110 transition-transform"></i>
-                </a> -->
-            </div>
-            
-            <!-- Call to Action Button -->
-            <div class="hero-cta">
-                <a href="#about" class="inline-flex items-center space-x-2 hero-glass px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:scale-105">
-                    <span>Explore My Work</span>
-                    <i class="fas fa-arrow-down animate-bounce"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
-        <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-            <div class="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
-        </div>
-    </div>
-</section>
 
-    <!-- Career Objective -->
-    <section id="about" class="section py-20 bg-white dark:bg-gray-800">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Career Objective</h2>
-            <div class="glass-dark dark:glass rounded-3xl p-8 text-center">
-                <i class="fas fa-target text-4xl gradient-text mb-6"></i>
-                <p class="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-                    Dedicated professional with expertise in <strong>database management, software testing, and web development</strong>. 
-                    Passionate about delivering <strong>innovative IT solutions</strong> to strengthen decision-making, improve operational 
-                    efficiency, and contribute to organizational growth in dynamic environments.
-                </p>
-                <div class="mt-6 flex justify-center">
-                    <div class="glass px-6 py-2 rounded-full">
-                        <span class="gradient-text font-semibold">2+ Years Experience</span>
+            <div class="hidden lg:block relative">
+                <!-- Glass Card Profile -->
+                <div class="glass-card p-6 rounded-3xl transform rotate-3 hover:rotate-0 transition-transform duration-500 relative">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-pink-400 flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                            NK
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white">Navnath Kamble</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Young Professional-II @ ICAR-NIVEDI</p>
+                        </div>
                     </div>
+
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Database Management</h4>
+                                <p class="text-xs text-slate-500">MySQL, Architecture Design</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Web Development</h4>
+                                <p class="text-xs text-slate-500">PHP, JavaScript, Python</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+                                <i class="fas fa-vial"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Software Testing</h4>
+                                <p class="text-xs text-slate-500">Selenium, Automation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white animate-bounce">
+            <i class="fas fa-chevron-down text-2xl opacity-50"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-primary-600 font-bold tracking-wider uppercase text-sm mb-2 block">My Story</span>
+            <h2 class="text-3xl md:text-5xl font-bold mb-8 text-slate-900 dark:text-white">Passionate about <span class="text-gradient">Innovation</span></h2>
+
+            <p class="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-12">
+                I am a dedicated professional with expertise in <strong>database management</strong>, <strong>software testing</strong>, and <strong>web development</strong>.
+                My goal is to deliver innovative IT solutions that strengthen decision-making, improve operational efficiency, and contribute to organizational growth in dynamic environments.
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700/50">
+                    <div class="text-3xl font-bold text-primary-600 mb-2">2+</div>
+                    <div class="text-sm font-medium text-slate-500">Years Experience</div>
+                </div>
+                <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700/50">
+                    <div class="text-3xl font-bold text-primary-600 mb-2">5+</div>
+                    <div class="text-sm font-medium text-slate-500">Major Projects</div>
+                </div>
+                <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700/50">
+                    <div class="text-3xl font-bold text-primary-600 mb-2">3</div>
+                    <div class="text-sm font-medium text-slate-500">Languages</div>
+                </div>
+                <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700/50">
+                    <div class="text-3xl font-bold text-primary-600 mb-2">10+</div>
+                    <div class="text-sm font-medium text-slate-500">Certifications</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Experience Timeline -->
-    <section id="experience" class="section py-20 bg-gray-50 dark:bg-gray-900">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Professional Experience</h2>
-            <div class="relative">
-                <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-400 to-pink-400"></div>
-                
-                <!-- ICAR-NIVEDI -->
-                <div class="timeline-item relative pl-20 mb-12">
-                    <div class="glass-dark dark:glass rounded-2xl p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div>
-                                <h3 class="text-2xl font-bold text-gray-800 dark:text-white">Young Professional-II</h3>
-                                <p class="text-purple-600 font-semibold">ICAR-NIVEDI, Bengaluru</p>
-                                <p class="text-gray-600 dark:text-gray-400">May 2023 – Present</p>
-                            </div>
-                            <i class="fas fa-building text-2xl text-purple-600"></i>
-                        </div>
-                        <ul class="text-gray-700 dark:text-gray-300 space-y-2">
-                            <li>• Supported monthly livestock disease risk forewarning bulletins</li>
-                            <li>• Designed database architecture & real-time monitoring logic for Nadres_v2</li>
-                            <li>• Built backend for antimicrobial usage analysis tool</li>
-                            <li>• Developed complaint management portal with database-driven system</li>
-                            <li>• Managed nivedi.res.in website and network operations</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Autonovire -->
-                <div class="timeline-item relative pl-20 mb-12">
-                    <div class="glass-dark dark:glass rounded-2xl p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div>
-                                <h3 class="text-2xl font-bold text-gray-800 dark:text-white">Technical Consultant</h3>
-                                <p class="text-purple-600 font-semibold">Autonovire Services Pvt. Ltd.</p>
-                                <p class="text-gray-600 dark:text-gray-400">Dec 2021 – Jun 2022</p>
-                            </div>
-                            <i class="fas fa-cogs text-2xl text-purple-600"></i>
-                        </div>
-                        <ul class="text-gray-700 dark:text-gray-300 space-y-2">
-                            <li>• Conducted manual & regression testing for web applications</li>
-                            <li>• Developed Selenium WebDriver automation scripts</li>
-                            <li>• Managed defects using JIRA for smooth release cycles</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Training -->
-                <div class="timeline-item relative pl-20">
-                    <div class="glass-dark dark:glass rounded-2xl p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div>
-                                <h3 class="text-2xl font-bold text-gray-800 dark:text-white">Automation Testing Trainee</h3>
-                                <p class="text-purple-600 font-semibold">Udemy</p>
-                                <p class="text-gray-600 dark:text-gray-400">Jun 2022 – May 2023</p>
-                            </div>
-                            <i class="fas fa-graduation-cap text-2xl text-purple-600"></i>
-                        </div>
-                        <ul class="text-gray-700 dark:text-gray-300 space-y-2">
-                            <li>• Hands-on training in automation frameworks</li>
-                            <li>• Designed & executed automated test scripts</li>
-                            <li>• Integrated with CI tools and debugging</li>
-                        </ul>
-                    </div>
-                </div>
+    <!-- Experience Section -->
+    <section id="experience" class="py-24 px-4 bg-slate-50 dark:bg-slate-900/50">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-primary-600 font-bold tracking-wider uppercase text-sm mb-2 block">Career Path</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">Professional Experience</h2>
             </div>
-        </div>
-    </section>
 
-    <!-- Projects Showcase -->
-    <section id="projects" class="section py-20 bg-white dark:bg-gray-800">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Key Projects</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Add this new project card in your projects grid -->
-<div class="project-card glass-dark dark:glass rounded-2xl p-6 cursor-pointer" onclick="openModal('modal6')">
-    <div class="text-center mb-4">
-        <i class="fas fa-server text-4xl gradient-text mb-4"></i>
-        <h3 class="text-xl font-bold text-gray-800 dark:text-white">NADRES V2 - Advanced</h3>
-    </div>
-    <p class="text-gray-600 dark:text-gray-400 mb-4">Next-generation livestock health monitoring with enhanced architecture and real-time analytics.</p>
-    <div class="flex flex-wrap gap-2">
-        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Advanced DB</span>
-        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Real-time</span>
-        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Analytics</span>
-    </div>
-</div>
-                <!-- Project 1 -->
-                <div class="project-card glass-dark dark:glass rounded-2xl p-6 cursor-pointer" onclick="openModal('modal1')">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-database text-4xl gradient-text mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">Nadres_v2 - LHDCP</h3>
-                    </div>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">Real-time livestock health monitoring system with advanced database architecture.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Database</span>
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Real-time</span>
+            <div class="relative pl-8 md:pl-0">
+                <!-- Timeline Line (Hidden on mobile) -->
+                <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-700 transform -translate-x-1/2"></div>
+
+                <!-- Item 1 -->
+                <div class="relative mb-12 md:mb-24 group">
+                    <div class="md:flex items-center justify-between w-full">
+                        <div class="md:w-[45%] mb-4 md:mb-0 md:text-right">
+                            <div class="inline-block px-4 py-1 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-semibold mb-2">
+                                May 2023 - Present
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Young Professional-II</h3>
+                            <p class="text-slate-500 dark:text-slate-400 font-medium">ICAR-NIVEDI, Bengaluru</p>
+                        </div>
+
+                        <div class="absolute left-[-29px] md:left-1/2 md:-translate-x-1/2 top-0 w-8 h-8 rounded-full bg-primary-600 border-4 border-white dark:border-dark-bg z-10 shadow-lg"></div>
+
+                        <div class="md:w-[45%]">
+                            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                                <ul class="space-y-2 text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                    <li>• Designed database architecture & monitoring logic for Nadres_v2.</li>
+                                    <li>• Built backend for antimicrobial usage analysis tool.</li>
+                                    <li>• Developed complaint management portal.</li>
+                                    <li>• Managed nivedi.res.in website operations.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Project 2 -->
-                <div class="project-card glass-dark dark:glass rounded-2xl p-6 cursor-pointer" onclick="openModal('modal2')">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-pills text-4xl gradient-text mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">AMU Tool</h3>
-                    </div>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">Antimicrobial usage tracking system providing policy insights.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Analytics</span>
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Backend</span>
-                    </div>
-                </div>
+                <!-- Item 2 -->
+                <div class="relative mb-12 md:mb-24 group">
+                    <div class="md:flex items-center justify-between w-full flex-row-reverse">
+                        <div class="md:w-[45%] mb-4 md:mb-0">
+                            <div class="inline-block px-4 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-semibold mb-2">
+                                Dec 2021 - Jun 2022
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Technical Consultant</h3>
+                            <p class="text-slate-500 dark:text-slate-400 font-medium">Autonovire Services Pvt. Ltd.</p>
+                        </div>
 
-                <!-- Project 3 -->
-                <div class="project-card glass-dark dark:glass rounded-2xl p-6 cursor-pointer" onclick="openModal('modal3')">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-headset text-4xl gradient-text mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">Complaint Management Portal</h3>
-                    </div>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">Database-driven system for complaint registration & resolution.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Web App</span>
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Database</span>
-                    </div>
-                </div>
+                        <div class="absolute left-[-29px] md:left-1/2 md:-translate-x-1/2 top-0 w-8 h-8 rounded-full bg-slate-400 border-4 border-white dark:border-dark-bg z-10 shadow-lg"></div>
 
-                <!-- Project 4 -->
-                <div class="project-card glass-dark dark:glass rounded-2xl p-6 cursor-pointer" onclick="openModal('modal4')">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-graduation-cap text-4xl gradient-text mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">Online Examination Portal</h3>
-                    </div>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">Scalable exam management system with robust features.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Web Dev</span>
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Scalable</span>
-                    </div>
-                </div>
-
-                <!-- Project 5 -->
-                <div class="project-card glass-dark dark:glass rounded-2xl p-6 cursor-pointer" onclick="openModal('modal5')">
-                    <div class="text-center mb-4">
-                        <i class="fas fa-eye text-4xl gradient-text mb-4"></i>
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">Object Detection System</h3>
-                    </div>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">Real-time object detection using CNN & OpenCV technologies.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">AI/ML</span>
-                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">OpenCV</span>
+                        <div class="md:w-[45%] md:text-right">
+                            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                                <ul class="space-y-2 text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                    <li>• Conducted manual & regression testing.</li>
+                                    <li>• Developed Selenium WebDriver automation scripts.</li>
+                                    <li>• Managed defects using JIRA for smooth release cycles.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -576,340 +422,224 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="section py-20 bg-gray-50 dark:bg-gray-900">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Skills & Technologies</h2>
+    <section id="skills" class="py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-primary-600 font-bold tracking-wider uppercase text-sm mb-2 block">Expertise</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">Skills & Technologies</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Development -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg flex items-center gap-2 text-slate-900 dark:text-white">
+                        <i class="fas fa-code text-primary-500"></i> Development
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">PHP</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">Python</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">JavaScript</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">Java</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">HTML/CSS</span>
+                    </div>
+                </div>
+
+                <!-- Testing -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg flex items-center gap-2 text-slate-900 dark:text-white">
+                        <i class="fas fa-bug text-pink-500"></i> Testing
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">Selenium</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">Manual Testing</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">TestNG</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">JUnit</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">Cucumber</span>
+                    </div>
+                </div>
+
+                <!-- Database -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg flex items-center gap-2 text-slate-900 dark:text-white">
+                        <i class="fas fa-database text-blue-500"></i> Data
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">MySQL</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">R</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">SAS</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">Data Analytics</span>
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-lg flex items-center gap-2 text-slate-900 dark:text-white">
+                        <i class="fas fa-tools text-amber-500"></i> Tools
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">Git</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">JIRA</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">Postman</span>
+                        <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700">Maven</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section (Bento Grid) -->
+    <section id="projects" class="py-24 px-4 bg-slate-50 dark:bg-slate-900/50">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-primary-600 font-bold tracking-wider uppercase text-sm mb-2 block">Portfolio</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">Featured Projects</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Large Card (NADRES V2) -->
+                <div class="lg:col-span-2 group relative overflow-hidden rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer" onclick="openModal('modal6')">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="p-8 h-full flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary-600 mb-6">
+                                <i class="fas fa-server text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">NADRES V2 - Advanced</h3>
+                            <p class="text-slate-600 dark:text-slate-300 mb-6 max-w-lg">Next-generation livestock health monitoring with enhanced architecture and real-time analytics.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-100 dark:bg-slate-900/50 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-400">Advanced DB</span>
+                            <span class="px-3 py-1 bg-slate-100 dark:bg-slate-900/50 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-400">Real-time</span>
+                            <span class="px-3 py-1 bg-slate-100 dark:bg-slate-900/50 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-400">Analytics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group relative overflow-hidden rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer" onclick="openModal('modal1')">
+                    <div class="p-6 h-full flex flex-col justify-between">
+                        <div class="mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 mb-4">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Nadres_v2 - LHDCP</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">Real-time livestock health monitoring system.</p>
+                        </div>
+                        <div class="flex items-center gap-2 text-primary-600 font-medium text-sm group-hover:gap-3 transition-all">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group relative overflow-hidden rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer" onclick="openModal('modal2')">
+                    <div class="p-6 h-full flex flex-col justify-between">
+                        <div class="mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 mb-4">
+                                <i class="fas fa-pills"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">AMU Tool</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">Antimicrobial usage tracking & insights.</p>
+                        </div>
+                        <div class="flex items-center gap-2 text-primary-600 font-medium text-sm group-hover:gap-3 transition-all">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="group relative overflow-hidden rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer" onclick="openModal('modal3')">
+                    <div class="p-6 h-full flex flex-col justify-between">
+                        <div class="mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 mb-4">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Complaint Portal</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">Ticket management system.</p>
+                        </div>
+                        <div class="flex items-center gap-2 text-primary-600 font-medium text-sm group-hover:gap-3 transition-all">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="group relative overflow-hidden rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer" onclick="openModal('modal5')">
+                    <div class="p-6 h-full flex flex-col justify-between">
+                        <div class="mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 mb-4">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Object Detection</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">Real-time detection using CNN & OpenCV.</p>
+                        </div>
+                        <div class="flex items-center gap-2 text-primary-600 font-medium text-sm group-hover:gap-3 transition-all">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-slate-900 dark:text-white flex items-center gap-3">
+                <i class="fas fa-graduation-cap text-primary-600"></i> Education
+            </h2>
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="glass-dark dark:glass rounded-2xl p-6">
-                    <h3 class="text-xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
-                        <i class="fas fa-code text-purple-600 mr-3"></i>
-                        Programming & Development
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">PHP</span>
-                                <span class="text-purple-600">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90"></div>
-                            </div>
+                <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">B.E. Computer Engineering</h3>
+                            <p class="text-primary-600 font-medium">MMCOE, Pune</p>
                         </div>
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">JavaScript</span>
-                                <span class="text-purple-600">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">Python</span>
-                                <span class="text-purple-600">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="80"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">Java</span>
-                                <span class="text-purple-600">75%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="75"></div>
-                            </div>
-                        </div>
+                        <span class="text-sm text-slate-500 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">2017-2021</span>
                     </div>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">CGPA: 7.11</p>
                 </div>
 
-                <div class="glass-dark dark:glass rounded-2xl p-6">
-                    <h3 class="text-xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
-                        <i class="fas fa-vial text-purple-600 mr-3"></i>
-                        Testing & Automation
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">Selenium</span>
-                                <span class="text-purple-600">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90"></div>
-                            </div>
+                <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Diploma in Computer Engg.</h3>
+                            <p class="text-primary-600 font-medium">MDA Polytechnic, Latur</p>
                         </div>
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">Manual Testing</span>
-                                <span class="text-purple-600">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="95"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">REST API</span>
-                                <span class="text-purple-600">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">JIRA</span>
-                                <span class="text-purple-600">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="80"></div>
-                            </div>
-                        </div>
+                        <span class="text-sm text-slate-500 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">2011-2017</span>
                     </div>
-                </div>
-
-                <div class="glass-dark dark:glass rounded-2xl p-6">
-                    <h3 class="text-xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
-                        <i class="fas fa-database text-purple-600 mr-3"></i>
-                        Database & Analytics
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">MySQL</span>
-                                <span class="text-purple-600">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">R</span>
-                                <span class="text-purple-600">75%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="75"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">SAS</span>
-                                <span class="text-purple-600">70%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="70"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-dark dark:glass rounded-2xl p-6">
-                    <h3 class="text-xl font-bold mb-6 text-gray-800 dark:text-white flex items-center">
-                        <i class="fas fa-tools text-purple-600 mr-3"></i>
-                        Tools & Frameworks
-                    </h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full">Git</span>
-                        <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full">Maven</span>
-                        <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full">TestNG</span>
-                        <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full">JUnit</span>
-                        <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full">Postman</span>
-                        <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full">Cucumber</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education & Certifications -->
-    <section id="education" class="section py-20 bg-white dark:bg-gray-800">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Education & Certifications</h2>
-            <div class="grid lg:grid-cols-2 gap-12">
-                <!-- Education -->
-                <div>
-                    <h3 class="text-2xl font-bold mb-8 text-gray-800 dark:text-white flex items-center">
-                        <i class="fas fa-graduation-cap text-purple-600 mr-3"></i>
-                        Education
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="glass-dark dark:glass rounded-xl p-6">
-                            <h4 class="text-lg font-bold text-gray-800 dark:text-white">B.E. Computer Engineering</h4>
-                            <p class="text-purple-600 font-semibold">MMCOE, Pune</p>
-                            <p class="text-gray-600 dark:text-gray-400">2017 – 2021 | CGPA: 7.11</p>
-                        </div>
-                        <div class="glass-dark dark:glass rounded-xl p-6">
-                            <h4 class="text-lg font-bold text-gray-800 dark:text-white">Diploma in Computer Engineering</h4>
-                            <p class="text-purple-600 font-semibold">MDA Polytechnic, Latur</p>
-                            <p class="text-gray-600 dark:text-gray-400">2011 – 2017 | 70.38%</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Certifications -->
-                <div>
-                    <h3 class="text-2xl font-bold mb-8 text-gray-800 dark:text-white flex items-center">
-                        <i class="fas fa-certificate text-purple-600 mr-3"></i>
-                        Certifications
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="glass-dark dark:glass rounded-xl p-4 flex items-center">
-                            <i class="fas fa-award text-purple-600 mr-3"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 dark:text-white">Selenium WebDriver with Java</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Udemy, 2022</p>
-                            </div>
-                        </div>
-                        <div class="glass-dark dark:glass rounded-xl p-4 flex items-center">
-                            <i class="fas fa-award text-purple-600 mr-3"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 dark:text-white">Java Programming</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Great Learning, 2022</p>
-                            </div>
-                        </div>
-                        <div class="glass-dark dark:glass rounded-xl p-4 flex items-center">
-                            <i class="fas fa-award text-purple-600 mr-3"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 dark:text-white">YAML Master Course</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Udemy, 2022</p>
-                            </div>
-                        </div>
-                        <div class="glass-dark dark:glass rounded-xl p-4 flex items-center">
-                            <i class="fas fa-award text-purple-600 mr-3"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 dark:text-white">Data Structures & Algorithms</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Great Learning, 2022</p>
-                            </div>
-                        </div>
-                        <div class="glass-dark dark:glass rounded-xl p-4 flex items-center">
-                            <i class="fas fa-award text-purple-600 mr-3"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 dark:text-white">JIRA Agile Project Management</h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">2022</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Achievements -->
-    <section id="achievements" class="section py-20 bg-gray-50 dark:bg-gray-900">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Achievements</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-dark dark:glass rounded-2xl p-6 text-center">
-                    <i class="fas fa-trophy text-4xl gradient-text mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">HackSprint v1.0</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Participated in 36-hour hackathon showcasing problem-solving & teamwork skills</p>
-                </div>
-                <div class="glass-dark dark:glass rounded-2xl p-6 text-center">
-                    <i class="fas fa-presentation text-4xl gradient-text mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">ICETEMS-2021</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Presented "Real-Time Object Detection using Deep Learning & OpenCV"</p>
-                </div>
-                <div class="glass-dark dark:glass rounded-2xl p-6 text-center">
-                    <i class="fas fa-star text-4xl gradient-text mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">ICAR Recognition</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Recognized for contributions in forewarning bulletins & system development</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interests & Languages -->
-    <section id="interests" class="section py-20 bg-white dark:bg-gray-800">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12">
-                <!-- Languages -->
-                <div>
-                    <h2 class="text-3xl font-bold mb-8 gradient-text flex items-center">
-                        <i class="fas fa-language mr-3"></i>
-                        Languages
-                    </h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="glass-dark dark:glass rounded-xl p-4 text-center">
-                            <i class="fas fa-globe text-2xl text-purple-600 mb-2"></i>
-                            <h3 class="font-bold text-gray-800 dark:text-white">English</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Fluent</p>
-                        </div>
-                        <div class="glass-dark dark:glass rounded-xl p-4 text-center">
-                            <i class="fas fa-globe text-2xl text-purple-600 mb-2"></i>
-                            <h3 class="font-bold text-gray-800 dark:text-white">Hindi</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Fluent</p>
-                        </div>
-                        <div class="glass-dark dark:glass rounded-xl p-4 text-center">
-                            <i class="fas fa-globe text-2xl text-purple-600 mb-2"></i>
-                            <h3 class="font-bold text-gray-800 dark:text-white">Marathi</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Fluent</p>
-                        </div>
-                        <div class="glass-dark dark:glass rounded-xl p-4 text-center">
-                            <i class="fas fa-globe text-2xl text-purple-600 mb-2"></i>
-                            <h3 class="font-bold text-gray-800 dark:text-white">Kannada</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Basic</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interests -->
-                <div>
-                    <h2 class="text-3xl font-bold mb-8 gradient-text flex items-center">
-                        <i class="fas fa-heart mr-3"></i>
-                        Interests
-                    </h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="glass-dark dark:glass rounded-xl p-6 text-center">
-                            <i class="fas fa-utensils text-3xl gradient-text mb-4"></i>
-                            <h3 class="font-bold text-gray-800 dark:text-white">Cooking</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Exploring culinary arts</p>
-                        </div>
-                        <div class="glass-dark dark:glass rounded-xl p-6 text-center">
-                            <i class="fas fa-plane text-3xl gradient-text mb-4"></i>
-                            <h3 class="font-bold text-gray-800 dark:text-white">Travelling</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Discovering new places</p>
-                        </div>
-                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">Percentage: 70.38%</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section py-20 bg-gray-50 dark:bg-gray-900">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-12 gradient-text">Get In Touch</h2>
-            <div class="glass-dark dark:glass rounded-3xl p-8">
-                <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
-                    I'm always open to discussing new opportunities and interesting projects. 
-                    Let's connect and explore how we can work together!
+    <section id="contact" class="py-24 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-card rounded-3xl p-8 md:p-12 text-center">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">Let's work together</h2>
+                <p class="text-lg text-slate-600 dark:text-slate-300 mb-10 max-w-2xl mx-auto">
+                    I'm always open to discussing new opportunities and interesting projects. Drop me a line!
                 </p>
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
-                    <a href="mailto:navnathkamble0007@gmail.com" class="flex flex-col items-center p-4 glass rounded-xl hover:bg-white/20 transition-colors">
-                        <i class="fas fa-envelope text-3xl gradient-text mb-2"></i>
-                        <span class="font-semibold text-gray-800 dark:text-white">Email</span>
-                        <span class="text-sm text-gray-600 dark:text-gray-400">navnathkamble0007@gmail.com</span>
+
+                <div class="flex flex-col md:flex-row justify-center gap-6 mb-12">
+                    <a href="mailto:navnathkamble0007@gmail.com" class="flex items-center justify-center gap-3 px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-full transition-all text-lg font-medium">
+                        <i class="fas fa-envelope"></i> navnathkamble0007@gmail.com
                     </a>
-                    <a href="tel:+919561874606" class="flex flex-col items-center p-4 glass rounded-xl hover:bg-white/20 transition-colors">
-                        <i class="fas fa-phone text-3xl gradient-text mb-2"></i>
-                        <span class="font-semibold text-gray-800 dark:text-white">Phone</span>
-                        <span class="text-sm text-gray-600 dark:text-gray-400">+91-9561874606</span>
+                    <a href="tel:+919561874606" class="flex items-center justify-center gap-3 px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all text-lg font-medium">
+                        <i class="fas fa-phone"></i> +91-9561874606
                     </a>
-                    <div class="flex flex-col items-center p-4 glass rounded-xl">
-                        <i class="fas fa-map-marker-alt text-3xl gradient-text mb-2"></i>
-                        <span class="font-semibold text-gray-800 dark:text-white">Location</span>
-                        <span class="text-sm text-gray-600 dark:text-gray-400">Bengaluru, India</span>
-                    </div>
                 </div>
-                <div class="flex justify-center space-x-6">
-                    <!-- <a href="#" class="w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-                        <i class="fab fa-linkedin-in text-xl text-purple-600"></i>
-                    </a> -->
-                    <a href="https://github.com/Navnath0006/" class="w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-                        <i class="fab fa-github text-xl text-purple-600"></i>
+
+                <div class="flex justify-center gap-6">
+                    <a href="https://github.com/Navnath0006/" target="_blank" class="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-primary-600 hover:text-white transition-all text-xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-primary-600 hover:text-white transition-all text-xl">
+                        <i class="fab fa-linkedin-in"></i>
                     </a>
                 </div>
             </div>
@@ -917,831 +647,190 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 dark:bg-black text-white py-8">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <p class="mb-4 md:mb-0">&copy; 2024 Navnath M. Kamble. All rights reserved.</p>
-                <button id="scroll-to-top" class="px-6 py-2 glass rounded-full hover:bg-white/20 transition-colors flex items-center space-x-2">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>Back to Top</span>
-                </button>
-            </div>
-        </div>
+    <footer class="py-8 text-center text-slate-500 dark:text-slate-400 text-sm">
+        <p>&copy; 2024 Navnath M. Kamble. All rights reserved.</p>
     </footer>
 
-    <!-- Project Modals -->
-    <!-- Modal 1 -->
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <span class="close float-right text-2xl cursor-pointer">&times;</span>
-            <h2 class="text-2xl font-bold mb-4 gradient-text">Nadres_v2 - LHDCP</h2>
-            <p class="mb-4">Real-time livestock health monitoring system with advanced database architecture and monitoring logic.</p>
-            <h3 class="font-bold mb-2">Key Features:</h3>
-            <ul class="list-disc list-inside mb-4">
-                <li>Real-time data processing and monitoring</li>
-                <li>Advanced database architecture design</li>
-                <li>Automated alert systems</li>
-                <li>Comprehensive reporting dashboard</li>
-            </ul>
-            <h3 class="font-bold mb-2">Technologies Used:</h3>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Database Design</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Real-time Processing</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Monitoring Systems</span>
+    <!-- Modals (Reused content structure) -->
+    <!-- Modal Template -->
+    <div id="modal-container">
+        <!-- Modals will be same as before but styled cleaner -->
+         <div id="modal6" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-2xl shadow-2xl p-6 md:p-8 relative transform scale-95 opacity-0 transition-all duration-300">
+                <button onclick="closeModal('modal6')" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 hover:bg-red-100 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">NADRES V2 - Advanced System</h3>
+                <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 text-sm">
+                    <p class="mb-4">Next-generation livestock health data collection and processing system with enhanced database architecture, real-time monitoring capabilities, and advanced analytics for comprehensive disease surveillance.</p>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Key Features:</h4>
+                    <ul class="list-disc pl-5 mb-4 space-y-1">
+                        <li>Advanced database schema design for livestock health records</li>
+                        <li>Real-time data synchronization across multiple endpoints</li>
+                        <li>Automated alert system for disease outbreaks</li>
+                        <li>Comprehensive reporting dashboard with visualizations</li>
+                    </ul>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Technologies:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded text-xs font-semibold">MySQL</span>
+                        <span class="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded text-xs font-semibold">PHP</span>
+                        <span class="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded text-xs font-semibold">JavaScript</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal 2 -->
-    <div id="modal2" class="modal">
-        <div class="modal-content">
-            <span class="close float-right text-2xl cursor-pointer">&times;</span>
-            <h2 class="text-2xl font-bold mb-4 gradient-text">AMU Tool</h2>
-            <p class="mb-4">Antimicrobial usage tracking system providing comprehensive policy insights and analytics.</p>
-            <h3 class="font-bold mb-2">Key Features:</h3>
-            <ul class="list-disc list-inside mb-4">
-                <li>Backend development for usage analysis</li>
-                <li>Policy insights generation</li>
-                <li>Data visualization and reporting</li>
-                <li>Compliance monitoring</li>
-            </ul>
-            <h3 class="font-bold mb-2">Technologies Used:</h3>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Backend Development</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Data Analytics</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Policy Analysis</span>
+        <div id="modal1" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-2xl shadow-2xl p-6 md:p-8 relative transform scale-95 opacity-0 transition-all duration-300">
+                <button onclick="closeModal('modal1')" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 hover:bg-red-100 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Nadres_v2 - LHDCP</h3>
+                <p class="mb-4 text-slate-600 dark:text-slate-300">Real-time livestock health monitoring system with advanced database architecture.</p>
+                <!-- Add more details as needed -->
             </div>
-        </div>
-    </div>
-
-    <!-- Modal 3 -->
-    <div id="modal3" class="modal">
-        <div class="modal-content">
-            <span class="close float-right text-2xl cursor-pointer">&times;</span>
-            <h2 class="text-2xl font-bold mb-4 gradient-text">Complaint Management Portal</h2>
-            <p class="mb-4">Comprehensive database-driven system for complaint registration, tracking, and resolution.</p>
-            <h3 class="font-bold mb-2">Key Features:</h3>
-            <ul class="list-disc list-inside mb-4">
-                <li>User-friendly complaint registration</li>
-                <li>Automated ticket tracking system</li>
-                <li>Resolution workflow management</li>
-                <li>Analytics and reporting dashboard</li>
-            </ul>
-            <h3 class="font-bold mb-2">Technologies Used:</h3>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Web Development</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Database Management</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Workflow Systems</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 4 -->
-    <div id="modal4" class="modal">
-        <div class="modal-content">
-            <span class="close float-right text-2xl cursor-pointer">&times;</span>
-            <h2 class="text-2xl font-bold mb-4 gradient-text">Online Examination Portal</h2>
-            <p class="mb-4">Scalable examination management system with robust features for educational institutions.</p>
-            <h3 class="font-bold mb-2">Key Features:</h3>
-            <ul class="list-disc list-inside mb-4">
-                <li>Secure exam environment</li>
-                <li>Automated grading system</li>
-                <li>Real-time monitoring</li>
-                <li>Comprehensive result analytics</li>
-            </ul>
-            <h3 class="font-bold mb-2">Technologies Used:</h3>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Web Application</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Security</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Scalability</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 5 -->
-    <div id="modal5" class="modal">
-        <div class="modal-content">
-            <span class="close float-right text-2xl cursor-pointer">&times;</span>
-            <h2 class="text-2xl font-bold mb-4 gradient-text">Real-Time Object Detection System</h2>
-            <p class="mb-4">Advanced object detection system using CNN and OpenCV technologies for real-time processing.</p>
-            <h3 class="font-bold mb-2">Key Features:</h3>
-            <ul class="list-disc list-inside mb-4">
-                <li>Real-time object recognition</li>
-                <li>CNN-based deep learning</li>
-                <li>High-performance image processing</li>
-                <li>Multiple object classification</li>
-            </ul>
-            <h3 class="font-bold mb-2">Technologies Used:</h3>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">CNN</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">OpenCV</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Deep Learning</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Python</span>
-            </div>
-        </div>
-    </div>
-    <!-- Modal 6 - NADRES V2 -->
-<div id="modal6" class="modal">
-    <div class="modal-content">
-        <span class="close float-right text-2xl cursor-pointer hover:text-red-500 transition-colors">&times;</span>
-        <div class="flex items-center mb-6">
-            <i class="fas fa-database text-3xl gradient-text mr-4"></i>
-            <h2 class="text-3xl font-bold gradient-text">NADRES V2 - Advanced System</h2>
         </div>
         
-        <div class="mb-6">
-            <p class="text-lg mb-4 text-gray-700 dark:text-gray-300">
-                Next-generation livestock health data collection and processing system with enhanced database architecture, 
-                real-time monitoring capabilities, and advanced analytics for comprehensive disease surveillance.
-            </p>
-            
-            <div class="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 p-4 rounded-lg mb-4">
-                <h4 class="font-bold text-purple-800 dark:text-purple-200 mb-2">
-                    <i class="fas fa-info-circle mr-2"></i>Project Impact
-                </h4>
-                <p class="text-purple-700 dark:text-purple-300 text-sm">
-                    Revolutionizing livestock health monitoring across multiple states with real-time data processing 
-                    and predictive analytics for early disease detection and prevention.
-                </p>
+        <div id="modal2" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-2xl shadow-2xl p-6 md:p-8 relative transform scale-95 opacity-0 transition-all duration-300">
+                <button onclick="closeModal('modal2')" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 hover:bg-red-100 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">AMU Tool</h3>
+                <p class="mb-4 text-slate-600 dark:text-slate-300">Antimicrobial usage tracking system providing comprehensive policy insights and analytics.</p>
             </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6 mb-6">
-            <div>
-                <h3 class="font-bold text-xl mb-3 text-gray-800 dark:text-white flex items-center">
-                    <i class="fas fa-cog text-purple-600 mr-2"></i>Core Features
-                </h3>
-                <ul class="space-y-2 text-gray-700 dark:text-gray-300">
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1 text-sm"></i>
-                        <span>Advanced database schema design for livestock health records</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1 text-sm"></i>
-                        <span>Real-time data synchronization across multiple endpoints</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1 text-sm"></i>
-                        <span>Automated alert system for disease outbreaks</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1 text-sm"></i>
-                        <span>Comprehensive reporting dashboard with visualizations</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1 text-sm"></i>
-                        <span>Multi-user role management and access control</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1 text-sm"></i>
-                        <span>Mobile-responsive interface for field data collection</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 class="font-bold text-xl mb-3 text-gray-800 dark:text-white flex items-center">
-                    <i class="fas fa-chart-line text-purple-600 mr-2"></i>Technical Highlights
-                </h3>
-                <ul class="space-y-2 text-gray-700 dark:text-gray-300">
-                    <li class="flex items-start">
-                        <i class="fas fa-code text-blue-500 mr-2 mt-1 text-sm"></i>
-                        <span>Scalable microservices architecture</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-code text-blue-500 mr-2 mt-1 text-sm"></i>
-                        <span>RESTful API development for data integration</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-code text-blue-500 mr-2 mt-1 text-sm"></i>
-                        <span>Advanced SQL queries for complex data analysis</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-code text-blue-500 mr-2 mt-1 text-sm"></i>
-                        <span>Automated backup and disaster recovery systems</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-code text-blue-500 mr-2 mt-1 text-sm"></i>
-                        <span>Performance optimization for large datasets</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-code text-blue-500 mr-2 mt-1 text-sm"></i>
-                        <span>Data encryption and security protocols</span>
-                    </li>
-                </ul>
+        <div id="modal3" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-2xl shadow-2xl p-6 md:p-8 relative transform scale-95 opacity-0 transition-all duration-300">
+                <button onclick="closeModal('modal3')" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 hover:bg-red-100 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Complaint Portal</h3>
+                <p class="mb-4 text-slate-600 dark:text-slate-300">Comprehensive database-driven system for complaint registration, tracking, and resolution.</p>
             </div>
         </div>
 
-        <div class="mb-6">
-            <h3 class="font-bold text-xl mb-3 text-gray-800 dark:text-white flex items-center">
-                <i class="fas fa-tools text-purple-600 mr-2"></i>Technologies & Tools Used
-            </h3>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium">MySQL</span>
-                <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-medium">PHP</span>
-                <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full text-sm font-medium">JavaScript</span>
-                <span class="px-3 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-full text-sm font-medium">HTML5/CSS3</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm font-medium">Bootstrap</span>
-                <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm font-medium">AJAX</span>
-                <span class="px-3 py-1 bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 rounded-full text-sm font-medium">Chart.js</span>
-                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-sm font-medium">Git</span>
+        <div id="modal5" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-2xl shadow-2xl p-6 md:p-8 relative transform scale-95 opacity-0 transition-all duration-300">
+                <button onclick="closeModal('modal5')" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 hover:bg-red-100 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Object Detection System</h3>
+                <p class="mb-4 text-slate-600 dark:text-slate-300">Advanced object detection system using CNN and OpenCV technologies for real-time processing.</p>
             </div>
-        </div>
-
-        <div class="mb-6">
-            <h3 class="font-bold text-xl mb-3 text-gray-800 dark:text-white flex items-center">
-                <i class="fas fa-trophy text-purple-600 mr-2"></i>Key Achievements
-            </h3>
-            <div class="grid md:grid-cols-3 gap-4">
-                <div class="text-center p-3 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg">
-                    <div class="text-2xl font-bold text-blue-600 dark:text-blue-300">50+</div>
-                    <div class="text-sm text-blue-700 dark:text-blue-200">Districts Covered</div>
-                </div>
-                <div class="text-center p-3 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-lg">
-                    <div class="text-2xl font-bold text-green-600 dark:text-green-300">10K+</div>
-                    <div class="text-sm text-green-700 dark:text-green-200">Records Processed</div>
-                </div>
-                <div class="text-center p-3 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-lg">
-                    <div class="text-2xl font-bold text-purple-600 dark:text-purple-300">99.9%</div>
-                    <div class="text-sm text-purple-700 dark:text-purple-200">System Uptime</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-            <h4 class="font-bold text-gray-800 dark:text-white mb-2 flex items-center">
-                <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Innovation Impact
-            </h4>
-            <p class="text-gray-700 dark:text-gray-300 text-sm">
-                NADRES V2 has significantly improved livestock disease surveillance capabilities, 
-                enabling faster response times to potential outbreaks and contributing to better 
-                animal health management across multiple states in India.
-            </p>
-        </div>
-    </div>
-</div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-nav" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden">
-        <div class="glass-dark w-80 h-full p-6">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-xl font-bold gradient-text">Menu</h2>
-                <button id="close-mobile-menu" class="text-white text-2xl">&times;</button>
-            </div>
-            <nav class="space-y-4">
-                <a href="#home" class="mobile-nav-link block py-3 text-white hover:text-purple-400 transition-colors">Home</a>
-                <a href="#about" class="mobile-nav-link block py-3 text-white hover:text-purple-400 transition-colors">About</a>
-                <a href="#experience" class="mobile-nav-link block py-3 text-white hover:text-purple-400 transition-colors">Experience</a>
-                <a href="#projects" class="mobile-nav-link block py-3 text-white hover:text-purple-400 transition-colors">Projects</a>
-                <a href="#skills" class="mobile-nav-link block py-3 text-white hover:text-purple-400 transition-colors">Skills</a>
-                <a href="#education" class="mobile-nav-link block py-3 text-white hover:text-purple-400 transition-colors">Education</a>
-                <a href="#contact" class="mobile-nav-link block py-3 text-white hover:text-purple-400 transition-colors">Contact</a>
-            </nav>
         </div>
     </div>
 
-   <!-- UPDATED SCRIPT TAG -->
-<script>
-    // DOM Elements - Declare at the top
-    const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const navbar = document.querySelector('.navbar');
-    const themeToggle = document.getElementById('theme-toggle');
-    const html = document.documentElement;
-    const scrollToTopBtn = document.getElementById('scroll-to-top');
-    const mobileMenuBtn = document.getElementById('mobile-menu');
-    const mobileNav = document.getElementById('mobile-nav');
-    const closeMobileMenu = document.getElementById('close-mobile-menu');
-    
-    // Lenis Smooth Scroll Initialization
-    let lenis;
+    <!-- Logic -->
+    <script>
+        // Init Lenis
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
 
-    function initLenis() {
-        try {
-            lenis = new Lenis({
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                direction: 'vertical',
-                gestureDirection: 'vertical',
-                smooth: true,
-                mouseMultiplier: 1,
-                smoothTouch: false,
-                touchMultiplier: 2,
-                infinite: false,
-            });
-
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
+        function raf(time) {
+            lenis.raf(time);
             requestAnimationFrame(raf);
-
-            console.log('Lenis initialized successfully');
-        } catch (error) {
-            console.warn('Lenis failed to initialize:', error);
-            lenis = null;
         }
-    }
+        requestAnimationFrame(raf);
 
-    // Initialize Lenis when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initLenis);
-    } else {
-        initLenis();
-    }
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
 
-    // GSAP ScrollTrigger registration
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Dark/Light Theme Toggle - FIXED
-    function updateTheme(isDark) {
-        if (isDark) {
+        // Check saved theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             html.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
         } else {
             html.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
         }
-    }
 
-    // Check for saved theme preference or default to light
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const shouldUseDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-
-    updateTheme(shouldUseDark);
-
-    // Theme toggle event listener - FIXED
-    if (themeToggle) {
-        themeToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            const isDark = html.classList.contains('dark');
-            updateTheme(!isDark);
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
         });
-    }
 
-    // Back to Top Button - FIXED
-    if (scrollToTopBtn) {
-        // Ensure button starts hidden
-        scrollToTopBtn.style.opacity = '0';
-        scrollToTopBtn.style.transform = 'translateY(20px)';
-        scrollToTopBtn.style.visibility = 'hidden';
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = mobileMenu.querySelectorAll('a');
 
-        scrollToTopBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (typeof lenis !== 'undefined' && lenis && lenis.scrollTo) {
-                lenis.scrollTo(0, {
-                    duration: 1.5
-                });
-            } else {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    }
-
-    // Back to top visibility control
-    let backToTopVisible = false;
-    function toggleBackToTop() {
-        if (!scrollToTopBtn) return;
-        
-        const shouldShow = window.scrollY > 500;
-        
-        if (shouldShow && !backToTopVisible) {
-            backToTopVisible = true;
-            scrollToTopBtn.style.visibility = 'visible';
-            scrollToTopBtn.style.opacity = '1';
-            scrollToTopBtn.style.transform = 'translateY(0)';
-        } else if (!shouldShow && backToTopVisible) {
-            backToTopVisible = false;
-            scrollToTopBtn.style.opacity = '0';
-            scrollToTopBtn.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                if (!backToTopVisible) {
-                    scrollToTopBtn.style.visibility = 'hidden';
-                }
-            }, 300);
-        }
-    }
-
-    // Smooth scroll for navigation links - FIXED
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const target = document.querySelector(targetId);
-            
-            if (target) {
-                if (lenis && lenis.scrollTo) {
-                    lenis.scrollTo(target, {
-                        duration: 1.2
-                    });
-                } else {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
-        });
-    });
-
-    // Mobile menu toggle
-    if (mobileMenuBtn && mobileNav && closeMobileMenu) {
         mobileMenuBtn.addEventListener('click', () => {
-            mobileNav.classList.remove('hidden');
+            mobileMenu.classList.remove('translate-x-full');
         });
 
-        closeMobileMenu.addEventListener('click', () => {
-            mobileNav.classList.add('hidden');
-        });
+        const closeMenu = () => {
+            mobileMenu.classList.add('translate-x-full');
+        };
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNav.classList.add('hidden');
-            });
-        });
-    }
+        closeMobileMenu.addEventListener('click', closeMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
 
-    // Modal Functionality - COMPLETE SYSTEM
-    function openModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            
-            gsap.fromTo(modal.querySelector('.modal-content'), 
-                { scale: 0.7, opacity: 0 },
-                { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" }
-            );
-        }
-    }
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
 
-    function closeModal(modal) {
-        gsap.to(modal.querySelector('.modal-content'), {
-            scale: 0.7,
-            opacity: 0,
-            duration: 0.2,
-            ease: "power2.in",
-            onComplete: () => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-    }
-
-    // Modal event listeners
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal(modal);
-            }
-        });
-        
-        const closeBtn = modal.querySelector('.close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                closeModal(modal);
-            });
-        }
-    });
-
-    // Close modal on Escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            const activeModal = document.querySelector('.modal[style*="block"]');
-            if (activeModal) {
-                closeModal(activeModal);
-            }
-        }
-    });
-
-    // Enhanced scroll spy
-    function updateActiveNavLink() {
-        const scrollPosition = window.scrollY + 100;
-
+        // Reveal sections
+        const sections = document.querySelectorAll('section');
         sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            const sectionId = section.getAttribute('id');
-
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('text-purple-600', 'font-bold');
-                    link.classList.add('text-gray-700', 'dark:text-gray-300');
-
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.remove('text-gray-700', 'dark:text-gray-300');
-                        link.classList.add('text-purple-600', 'font-bold');
-                    }
-                });
-            }
-        });
-    }
-
-    // Performance Optimized Scroll Handler - FIXED
-    let scrollTimeout;
-    function handleScroll() {
-        if (scrollTimeout) {
-            clearTimeout(scrollTimeout);
-        }
-        
-        scrollTimeout = setTimeout(() => {
-            // Navbar scroll effect
-            if (navbar) {
-                if (window.scrollY > 100) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            }
-            
-            // Back to top button
-            toggleBackToTop();
-            
-            // Update active nav link
-            updateActiveNavLink();
-        }, 10);
-    }
-
-    // Single scroll event listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Scroll animations - Fix visibility issue
-    gsap.utils.toArray('.section').forEach(section => {
-        gsap.fromTo(section, 
-            {
-                opacity: 1,
-                y: 30
-            },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top 90%",
-                    end: "bottom 20%",
-                    toggleActions: "play none none none"
-                }
-            }
-        );
-    });
-
-    // Skills Animation - FIXED
-    function animateSkillBars() {
-        const skillBars = document.querySelectorAll('.skill-progress');
-        
-        skillBars.forEach(bar => {
-            const width = bar.getAttribute('data-width');
-            
-            gsap.fromTo(bar, 
-                { scaleX: 0 },
-                { 
-                    scaleX: width / 100,
-                    duration: 1.5,
-                    ease: "power2.out",
+            gsap.fromTo(section.children,
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    stagger: 0.2,
+                    ease: "power3.out",
                     scrollTrigger: {
-                        trigger: bar,
-                        start: "top 85%",
-                        toggleActions: "play none none none"
+                        trigger: section,
+                        start: "top 80%",
                     }
                 }
             );
         });
-    }
 
-    // Floating elements animation
-    gsap.to('.glass', {
-        y: "random(-10, 10)",
-        rotation: "random(-2, 2)",
-        duration: "random(2, 4)",
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-        stagger: {
-            each: 0.2,
-            from: "random"
-        }
-    });
-
-    // Text reveal animation for hero
-    gsap.fromTo('.gradient-text', 
-        {
-            opacity: 0,
-            y: 50,
-            scale: 0.8
-        },
-        {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1.5,
-            ease: "back.out(1.7)",
-            stagger: 0.2
-        }
-    );
-
-    // Ensure content is visible from start
-    window.addEventListener('load', () => {
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-            section.classList.add('visible');
-        });
-        
-        setTimeout(() => {
-            ScrollTrigger.refresh();
-            animateSkillBars();
-        }, 100);
-    });
-
-    // Intersection Observer for additional animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+        // Modals
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.add('active');
+                const content = modal.querySelector('div');
+                // Small delay to allow display block to take effect if we were hiding it
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
             }
-        });
-    }, observerOptions);
+        }
 
-    document.querySelectorAll('.section, .timeline-item, .project-card').forEach(el => {
-        observer.observe(el);
-    });
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                const content = modal.querySelector('div');
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.remove('active');
+                }, 300);
+            }
+        }
 
-    // Smooth reveal for achievements
-    gsap.utils.toArray('#achievements .glass-dark').forEach((card, i) => {
-        gsap.fromTo(card,
-            {
-                opacity: 0,
-                y: 50,
-                rotationY: 180
-            },
-            {
-                opacity: 1,
-                y: 0,
-                rotationY: 0,
-                duration: 1,
-                delay: i * 0.3,
-                ease: "back.out(1.7)",
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
+        // Close modal on click outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal.id);
                 }
-            }
-        );
-    });
-
-    // Interactive hover effects
-    document.querySelectorAll('.project-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            gsap.to(card, {
-                scale: 1.05,
-                rotationY: 5,
-                duration: 0.3,
-                ease: "power2.out"
             });
         });
-
-        card.addEventListener('mouseleave', () => {
-            gsap.to(card, {
-                scale: 1,
-                rotationY: 0,
-                duration: 0.3,
-                ease: "power2.out"
-            });
-        });
-    });
-
-    // Cursor following effect
-    const cursor = document.createElement('div');
-    cursor.style.cssText = `
-        position: fixed;
-        width: 20px;
-        height: 20px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transition: transform 0.1s ease;
-        opacity: 0;
-    `;
-    document.body.appendChild(cursor);
-
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX - 10 + 'px';
-        cursor.style.top = e.clientY - 10 + 'px';
-        cursor.style.opacity = '0.8';
-    });
-
-    document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-    });
-
-    // Initialize tooltips for skill bars
-    document.querySelectorAll('.skill-item').forEach(item => {
-        const skillName = item.querySelector('span').textContent;
-        const percentage = item.querySelector('.text-purple-600').textContent;
-        
-        item.addEventListener('mouseenter', () => {
-            const tooltip = document.createElement('div');
-            tooltip.className = 'absolute bg-black text-white px-2 py-1 rounded text-sm z-50';
-            tooltip.textContent = `${skillName}: ${percentage}`;
-            tooltip.style.top = '-30px';
-            tooltip.style.left = '50%';
-            tooltip.style.transform = 'translateX(-50%)';
-            item.style.position = 'relative';
-            item.appendChild(tooltip);
-        });
-
-        item.addEventListener('mouseleave', () => {
-            const tooltip = item.querySelector('.absolute');
-            if (tooltip) {
-                item.removeChild(tooltip);
-            }
-        });
-    });
-
-    // Add ripple effect to buttons
-    function createRipple(event) {
-        const button = event.currentTarget;
-        const rect = button.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = event.clientX - rect.left - size / 2;
-        const y = event.clientY - rect.top - size / 2;
-        
-        const ripple = document.createElement('span');
-        ripple.style.cssText = `
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            left: ${x}px;
-            top: ${y}px;
-            width: ${size}px;
-            height: ${size}px;
-        `;
-        
-        button.style.position = 'relative';
-        button.style.overflow = 'hidden';
-        button.appendChild(ripple);
-        
-        setTimeout(() => {
-            ripple.remove();
-        }, 600);
-    }
-
-    // Apply ripple effect to buttons
-    document.querySelectorAll('button, .glass').forEach(element => {
-        element.addEventListener('click', createRipple);
-    });
-
-    // Lazy loading for performance
-    const lazyElements = document.querySelectorAll('.lazy');
-    const lazyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('loaded');
-                lazyObserver.unobserve(entry.target);
-            }
-        });
-    });
-
-    lazyElements.forEach(element => {
-        lazyObserver.observe(element);
-    });
-
-    // Console welcome message
-    console.log(`
-    🚀 Welcome to Navnath M. Kamble's Portfolio!
-    
-    Built with:
-    - HTML5 & CSS3
-    - Tailwind CSS
-    - JavaScript (ES6+)
-    - GSAP & ScrollTrigger
-    - Lenis Smooth Scroll
-    
-    Features:
-    ✨ Smooth scrolling
-    🎭 Dark/Light mode
-    📱 Fully responsive
-    🎨 Glassmorphism design
-    🔥 Advanced animations
-    
-    Feel free to explore the code and reach out!
-    `);
-</script>
+    </script>
 </body>
 </html>
