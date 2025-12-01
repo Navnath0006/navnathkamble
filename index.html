@@ -798,136 +798,182 @@
         </div>
     </div>
 
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary-600 hover:bg-primary-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 invisible translate-y-10 z-50 group" aria-label="Back to Top">
+        <i class="fas fa-arrow-up text-xl group-hover:-translate-y-1 transition-transform"></i>
+    </button>
+
     <!-- Logic -->
     <script>
-        // Init Lenis
-        const lenis = new Lenis({
-            duration: 1.2,
+        // Theme Toggle & UI Logic (Critical)
+        // Wrapped in IIFE to avoid scope pollution and ensure it runs independent of other scripts
+        (function() {
+            document.addEventListener('DOMContentLoaded', () => {
+                const themeToggle = document.getElementById('theme-toggle');
+                const html = document.documentElement;
+
+                // Back to Top Logic
+                const backToTopBtn = document.getElementById('back-to-top');
+
+                const toggleBackToTop = () => {
+                    if (window.scrollY > 500) {
+                        if(backToTopBtn) {
+                            backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-10');
+                            backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
+                        }
+                    } else {
+                        if(backToTopBtn) {
+                            backToTopBtn.classList.add('opacity-0', 'invisible', 'translate-y-10');
+                            backToTopBtn.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                        }
+                    }
+                };
+
+                window.addEventListener('scroll', toggleBackToTop);
+
+                if(backToTopBtn) {
+                    backToTopBtn.addEventListener('click', () => {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                // Function to apply theme
+                const applyTheme = (isDark) => {
+                    if (isDark) {
+                        html.classList.add('dark');
+                        localStorage.theme = 'dark';
+                    } else {
+                        html.classList.remove('dark');
+                        localStorage.theme = 'light';
+                    }
+                };
+
+                // Check saved theme or preference
+                const savedTheme = localStorage.theme;
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                    applyTheme(true);
+                } else {
+                    applyTheme(false);
+                }
+
+                if (themeToggle) {
+                    themeToggle.addEventListener('click', () => {
+                        const isDark = html.classList.contains('dark');
+                        applyTheme(!isDark);
+                    });
+                }
+
+                // Mobile Menu
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+                const closeMobileMenu = document.getElementById('close-mobile-menu');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileLinks = mobileMenu ? mobileMenu.querySelectorAll('a') : [];
+
+                if (mobileMenuBtn && mobileMenu) {
+                    mobileMenuBtn.addEventListener('click', () => {
+                        mobileMenu.classList.remove('translate-x-full');
+                    });
+                }
+
+                const closeMenu = () => {
+                    if (mobileMenu) mobileMenu.classList.add('translate-x-full');
+                };
+
+                if (closeMobileMenu) closeMobileMenu.addEventListener('click', closeMenu);
+                if (mobileLinks.length > 0) mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+                // Modals
+                window.openModal = function(id) {
+                    const modal = document.getElementById(id);
+                    if(modal) {
+                        modal.classList.add('active');
+                        const content = modal.querySelector('div');
+                        setTimeout(() => {
+                            content.classList.remove('scale-95', 'opacity-0');
+                            content.classList.add('scale-100', 'opacity-100');
+                        }, 10);
+                    }
+                };
+
+                window.closeModal = function(id) {
+                    const modal = document.getElementById(id);
+                    if(modal) {
+                        const content = modal.querySelector('div');
+                        content.classList.remove('scale-100', 'opacity-100');
+                        content.classList.add('scale-95', 'opacity-0');
+                        setTimeout(() => {
+                            modal.classList.remove('active');
+                        }, 300);
+                    }
+                };
+
+                // Close modal on click outside
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            closeModal(modal.id);
+                        }
+                    });
+                });
+            });
+        })();
+
+        // Init Lenis (Smooth Scrolling) - Wrapped to prevent blocking
+        try {
+            if (typeof Lenis !== 'undefined') {
+                const lenis = new Lenis({
+                    duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             direction: 'vertical',
             gestureDirection: 'vertical',
-            smooth: true,
-            mouseMultiplier: 1,
-            smoothTouch: false,
-            touchMultiplier: 2,
-        });
+                    smooth: true,
+                    mouseMultiplier: 1,
+                    smoothTouch: false,
+                    touchMultiplier: 2,
+                });
 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-
-        // Theme Toggle
-        // Wrap in DOMContentLoaded to ensure elements exist
-        document.addEventListener('DOMContentLoaded', () => {
-            const themeToggle = document.getElementById('theme-toggle');
-            const html = document.documentElement;
-
-            // Function to apply theme
-            const applyTheme = (isDark) => {
-                if (isDark) {
-                    html.classList.add('dark');
-                    localStorage.theme = 'dark';
-                } else {
-                    html.classList.remove('dark');
-                    localStorage.theme = 'light';
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
                 }
-            };
-
-            // Check saved theme or preference
-            const savedTheme = localStorage.theme;
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-                applyTheme(true);
-            } else {
-                applyTheme(false);
+                requestAnimationFrame(raf);
             }
-
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    const isDark = html.classList.contains('dark');
-                    applyTheme(!isDark);
-                });
-            }
-
-            // Mobile Menu
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const closeMobileMenu = document.getElementById('close-mobile-menu');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-
-            if (mobileMenuBtn && mobileMenu) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    mobileMenu.classList.remove('translate-x-full');
-                });
-            }
-
-            const closeMenu = () => {
-                if (mobileMenu) mobileMenu.classList.add('translate-x-full');
-            };
-
-            if (closeMobileMenu) closeMobileMenu.addEventListener('click', closeMenu);
-            if (mobileLinks) mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
-        });
+        } catch (e) {
+            console.warn('Lenis or ScrollTrigger initialization failed:', e);
+        }
 
         // GSAP Animations
-        gsap.registerPlugin(ScrollTrigger);
+        try {
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
 
-        // Reveal sections
-        const sections = document.querySelectorAll('section');
-        sections.forEach(section => {
-            gsap.fromTo(section.children,
-                { y: 50, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1,
-                    stagger: 0.2,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                    }
-                }
-            );
-        });
-
-        // Modals
-        function openModal(id) {
-            const modal = document.getElementById(id);
-            if(modal) {
-                modal.classList.add('active');
-                const content = modal.querySelector('div');
-                // Small delay to allow display block to take effect if we were hiding it
-                setTimeout(() => {
-                    content.classList.remove('scale-95', 'opacity-0');
-                    content.classList.add('scale-100', 'opacity-100');
-                }, 10);
+                // Reveal sections
+                const sections = document.querySelectorAll('section');
+                sections.forEach(section => {
+                    gsap.fromTo(section.children,
+                        { y: 50, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 1,
+                            stagger: 0.2,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: section,
+                                start: "top 80%",
+                            }
+                        }
+                    );
+                });
             }
+        } catch (e) {
+            console.warn('GSAP initialization failed:', e);
         }
-
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            if(modal) {
-                const content = modal.querySelector('div');
-                content.classList.remove('scale-100', 'opacity-100');
-                content.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => {
-                    modal.classList.remove('active');
-                }, 300);
-            }
-        }
-
-        // Close modal on click outside
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal(modal.id);
-                }
-            });
-        });
     </script>
 </body>
 </html>
